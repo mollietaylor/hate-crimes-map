@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+  <title>Hate Incidents</title>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <link rel="stylesheet" href="../MarkerCluster.css" />
+  <link rel="stylesheet" href="../MarkerCluster.Default.css" />
+  <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <![endif]-->
+  <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://gtg339g.com/skills/js/leaflet/leaflet.ajax.js"></script>
+  <script src="../leaflet.markercluster-src.js"></script>
+  <script src="crimes.js"></script>
+  <style type="text/css">
+  #map {
+    height: 500px;
+  }
+
+
+  .marker-cluster-small {
+    background-color: rgba(241, 211, 87, 0.6);
+    }
+  .marker-cluster-small div {
+    background-color: rgba(240, 194, 12, 0.6);
+    }
+
+  .marker-cluster-medium {
+    background-color: rgba(253, 156, 115, 0.6);
+    }
+  .marker-cluster-medium div {
+    background-color: rgba(241, 128, 23, 0.6);
+    }
+
+  .marker-cluster-large {
+    background-color: rgba(242, 90, 82, 0.6);
+    }
+  .marker-cluster-large div {
+    background-color: rgba(242, 35, 24, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+<h1>Hate Incidents</h1>
+<div id="map"></div>
+<div id="links">
+  Map icons provided by <a href="http://mapicons.nicolasmollet.com/">Nicolas Mollet and UMapper</a>.<br>
+  Hate crimes data from <a href="http://www.splcenter.org/get-informed/hate-incidents">SPLC</a>.<br>
+  Most city coordinate data from <a href="http://geonames.usgs.gov/domestic/download_data.htm">USGS</a>.<br>
+</div>
+
+<script type="text/javascript">
+
+  var crimeIcon = L.icon({
+    iconUrl: 'crime.png',
+    iconSize: [32, 37],
+    shadowSize: [0, 0],
+    iconAnchor: [16, 37],
+    shadowAnchor: [0, 0],
+    popupAnchor: [0, -37]
+  });
+
+  var map = L.map('map').setView([40, -100], 4);
+
+  L.tileLayer('http://tile.cloudmade.com/d2268fb4d6a84b33b508fa5640063baf/1/256/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+    maxZoom: 13
+  }).addTo(map);
+
+  var markers = L.markerClusterGroup({
+    polygonOptions: {opacity: 0.3,
+      weight: 3}
+  });
+
+  function onEachItem(feature, layer) {
+    layer.bindPopup(feature.properties.Date + "<br>" + feature.properties.Type + "<br>" + feature.properties.Description);
+  };
+
+  var incidentLayer = L.geoJson(crimes, {
+    onEachFeature: onEachItem,
+    pointToLayer: function(feature, latlng) {
+      return L.marker(latlng, {icon: crimeIcon});
+    }
+  });
+
+  markers.addLayer(incidentLayer);      // add it to the map
+  map.addLayer(markers);
+</script>
+
+
+
+</body>
+</html>
