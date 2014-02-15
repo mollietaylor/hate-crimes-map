@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.phonegap.example"
+        versionCode = "1" 
+        version     = "0.0.1" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Hate Incidents</name>
+
+    <description>
+        An map of hate incidents, using data from SPLC. 
+    </description>
+
+    <author href="http://gtg339g.com" email="mollie.taylor@gmail.com">
+        Mollie Taylor
+    </author>
+
+</widget>
