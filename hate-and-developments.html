@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+  <title>Hate Incidents</title>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <link rel="stylesheet" href="../MarkerCluster.css" />
+  <link rel="stylesheet" href="../MarkerCluster.Default.css" />
+  <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <![endif]-->
+  <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://gtg339g.com/skills/js/leaflet/leaflet.ajax.js"></script>
+  <script src="../leaflet.markercluster-src.js"></script>
+  <script src="crimes.js"></script>
+  <script src="developments.js"></script>
+  <style type="text/css">
+  #map {
+    height: 500px;
+  }
+  </style>
+    <script type="text/javascript" src="http://proximityviz.com/files/analytics.js"></script>
+</head>
+<body>
+
+<h1>Hate Incidents</h1>
+<div id="map"></div>
+<div id="links">
+  Map icons provided by <a href="http://mapicons.nicolasmollet.com/">Nicolas Mollet</a>.<br>
+  Data from <a href="http://www.splcenter.org/get-informed/hate-incidents">SPLC</a>.<br>
+</div>
+
+<script type="text/javascript">
+
+  var crimeIcon = L.icon({
+    iconUrl: 'crime.png',
+    iconSize: [32, 37],
+    shadowSize: [0, 0],
+    iconAnchor: [16, 37],
+    shadowAnchor: [0, 0],
+    popupAnchor: [0, -37]
+  });
+
+  var legalIcon = L.icon({
+    iconUrl: 'court.png',
+    iconSize: [32, 37],
+    shadowSize: [0, 0],
+    iconAnchor: [16, 37],
+    shadowAnchor: [0, 0],
+    popupAnchor: [0, -37]
+  });
+
+  var markers = L.markerClusterGroup();
+
+  function onEachItem(feature, layer) {
+    layer.bindPopup(feature.properties.Date + "<br>" + feature.properties.Type + "<br>" + feature.properties.Description);
+  };
+
+  var iLayer = L.geoJson(crimes, {
+    onEachFeature: onEachItem,
+    pointToLayer: function(feature, latlng) {
+      return L.marker(latlng, {icon: crimeIcon});
+    }
+  });
+
+  var developmentLayer = L.geoJson(developments, {
+    onEachFeature: onEachItem,
+    pointToLayer: function(feature, latlng) {
+      return L.marker(latlng, {icon: legalIcon});
+    }
+  });
+
+  var map = L.map('map', {
+    center: new L.LatLng(40, -100),
+    zoom: 4,
+    layers: [incidentLayer,developmentLayer]
+  });
+
+  markers.addLayer(iLayer);      // add it to the map
+  var incidentLayer = map.addLayer(markers);
+
+  var overlayMaps = {
+    "Incidents": incidentLayer,
+    "Legal Developments": developmentLayer
+  };
+
+  L.control.layers(null, overlayMaps).addTo(map);
+
+  // or tiles #7:
+  L.tileLayer('http://tile.cloudmade.com/d2268fb4d6a84b33b508fa5640063baf/29889/256/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+    maxZoom: 13
+  }).addTo(map);
+</script>
+
+
+
+
+</body>
+</html>

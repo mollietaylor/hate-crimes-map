@@ -5,17 +5,17 @@
   <title>Hate Incidents</title>
   <link rel="icon" 
     type="image/png" 
-    href="http://gtg339g.com/favicon.png">
+    href="http://proximityviz.com/favicon.png">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-  <link rel="stylesheet" href="http://gtg339g.com/files/MarkerCluster.css" />
-  <link rel="stylesheet" href="http://gtg339g.com/files/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="http://proximityviz.com/files/MarkerCluster.css" />
+  <link rel="stylesheet" href="http://proximityviz.com/files/MarkerCluster.Default.css" />
   <!--[if lte IE 8]>
       <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
   <![endif]-->
   <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script type="text/javascript" src="http://gtg339g.com/files/leaflet.ajax.js"></script>
-  <script src="http://gtg339g.com/files/leaflet.markercluster-src.js"></script>
+  <script type="text/javascript" src="http://proximityviz.com/files/leaflet.ajax.js"></script>
+  <script src="http://proximityviz.com/files/leaflet.markercluster-src.js"></script>
   <script src="crimes.js"></script>
   <style type="text/css">
   #map {
@@ -44,6 +44,7 @@
     background-color: rgba(242, 35, 24, 0.6);
     }
   </style>
+    <script type="text/javascript" src="http://proximityviz.com/files/analytics.js"></script>
 </head>
 <body>
 
@@ -68,8 +69,8 @@
 
   var map = L.map('map').setView([40, -100], 4);
 
-  L.tileLayer('http://tile.cloudmade.com/d2268fb4d6a84b33b508fa5640063baf/1/256/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+  L.tileLayer('http://otile4.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
+    attribution: '<a href="http://proximityviz.com/">Proximity Viz</a> | Tiles &copy; <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" />',
     maxZoom: 13
   }).addTo(map);
 
@@ -92,6 +93,7 @@
   markers.addLayer(incidentLayer);      // add it to the map
   map.addLayer(markers);
 </script>
+
 
 
 
